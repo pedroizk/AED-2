@@ -1,0 +1,127 @@
+RELATORIO - GRAFOS TSP
+
+
+Aluno: Pedro Izkovitz
+Arquivo: dj38.tsp (38 cidades)
+
+
+
+1. IMPLEMENTACOES
+====================
+
+1.1 MATRIZ DE ADJACENCIAS
+--------------------------
+
+Estrutura:
+- Array n x n
+- Acesso direto [i][j]
+
+Complexidade:
+- Inserir vertice: O(n^2) tempo, O(n^2) espaco
+- Remover vertice: O(n^2) tempo, O(n^2) espaco
+- Buscar aresta: O(1) tempo, O(1) espaco
+- Editar aresta: O(1) tempo, O(1) espaco
+- Espaco total: O(n^2)
+
+Por que:
+- Inserir/remover: precisa realocar matriz inteira e copiar n^2 elementos
+- Buscar/editar: acesso direto na posicao [i][j]
+
+
+1.2 LISTA DE ADJACENCIAS
+========================
+
+Estrutura:
+- Array de vertices
+- Cada vertice tem lista encadeada de arestas
+
+Complexidade:
+- Inserir vertice: O(n) tempo, O(n) espaco
+- Remover vertice: O(n*m) tempo, O(1) espaco
+- Buscar aresta: O(m) tempo, O(1) espaco
+- Editar aresta: O(m) tempo, O(1) espaco
+- Espaco total: O(n+m)
+
+onde m = grau medio (pra grafo completo m = n-1)
+
+Por que:
+- Inserir: adiciona vertice e conecta com os n existentes
+- Remover: percorre n vertices e suas listas de tamanho m
+- Buscar/editar: precisa percorrer lista ate achar aresta
+
+
+
+2. TESTES COM dj38.tsp
+======================
+
+Arquivo: dj38.tsp
+Vertices: 38
+Tipo: grafo completo (todas cidades conectadas)
+
+
+Tempo de construcao:
+- Matriz: 0.037 ms
+- Lista: 0.057 ms
+-> Matriz mais rapida
+
+Busca de arestas (380 operacoes):
+- Matriz: 0.020 ms
+- Lista: 0.031 ms
+-> Matriz mais rapida
+
+Edicao de arestas (380 operacoes):
+- Matriz: 0.014 ms
+- Lista: 0.051 ms
+-> Matriz bem mais rapida
+
+Memoria:
+- Matriz: 11 KB
+- Lista: 34 KB
+-> Matriz usa menos
+
+
+
+3. COMPARACAO
+=============
+
+GRAFOS DENSOS (muitas arestas, tipo TSP):
+- Melhor: MATRIZ
+- Motivo: acesso O(1) e usa menos memoria que lista
+- Lista tem overhead de ponteiros
+
+GRAFOS ESPARSOS (poucas arestas, tipo rede social):
+- Melhor: LISTA
+- Motivo: economiza memoria
+- Matriz desperdiça espaco com n^2 mesmo tendo poucas arestas
+
+
+Quando usar matriz:
+- Grafo denso
+- Muitas buscas/edicoes
+- n pequeno (< 1000)
+- TSP
+
+Quando usar lista:
+- Grafo esparso
+- Muitas insercoes/remocoes
+- n grande (> 10000)
+- Memoria limitada
+
+
+
+4. CONCLUSAO
+=============
+
+Para dj38.tsp (grafo completo com 38 vertices):
+- Matriz e melhor em tudo
+- Mais rapida em todas operacoes
+- Usa menos memoria (11 KB vs 34 KB)
+
+Por que matriz e melhor aqui:
+- Grafo completo (denso)
+- Poucas cidades (38)
+- TSP faz muitas consultas de distancia
+- Lista tem overhead desnecessario
+
+Se fosse grafo esparso (tipo mapa com poucas estradas), lista seria melhor.
+
